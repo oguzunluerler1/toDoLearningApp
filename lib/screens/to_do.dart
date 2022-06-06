@@ -11,27 +11,70 @@ class _ToDoState extends State<ToDo> {
   List<String> TaskList = [
     "Take out emre", "Do the dishes", "Do the laundry", "Go to the grocery store", "Pay the bills"
   ];
-  List<String> CompletedList = [
+  List<String> CompletedList = [];
 
-  ];
+  TextEditingController tf = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: Colors.amber,
         title: Text("a"),
       ),
+      floatingActionButton: FAButton(),
       body: bodyMethod()
     );
   }
 
+  FloatingActionButton FAButton() {
+    return FloatingActionButton(
+      child: Icon(Icons.add),
+      onPressed: (){
+        tf.clear();
+        openDialog();
+      }
+    );
+  }
+
+  void openDialog() {
+    showDialog(
+      context: context, 
+      builder: (BuildContext context) => AlertDialog(
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: tf,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  
+                )
+              ),
+            ),
+            ElevatedButton(onPressed: (){
+              TaskList.add(tf.text);
+              setState(() {
+                
+              });
+              Navigator.pop(context);
+            }, child: Text("Add task"))
+          ],
+        ),
+      ),
+    );
+  }
+
+
+
   Widget bodyMethod() {
     return Container(
       decoration: gradBackgroundColor(),
-      child: Column(
+      child: ListView(
         children: [
           SizedBox(height: 8),
-          Text("Stuff to do;", style: TextStyle(fontSize: 30),),
+          Center(child: Text("Stuff to do;", style: TextStyle(fontSize: 30),)),
           dividerBetween(),  
           TaskList.length == 0 
           ? Image.network("https://i.ytimg.com/vi/rDleFy3yFB8/hqdefault.jpg") 
@@ -42,33 +85,39 @@ class _ToDoState extends State<ToDo> {
                 return toDoCards(index);
               },  
             ),
-
+      
           CompletedTaskAndIcon(),
-          Expanded(
-            child: ListView.builder(
-              itemCount: CompletedList.length,
-              itemBuilder: (BuildContext context, int index) {
-                return completedToDoCards(index);
-              },
-            ),
-          ),
         ],
       ),
     );
+  }
+
+  Widget expansionTileCompletedAssets() {
+    return ListView.builder(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(), 
+            itemCount: CompletedList.length,
+            itemBuilder: (BuildContext context, int index) {
+              return completedToDoCards(index);
+            },
+          );
   }
 
   Column CompletedTaskAndIcon() {
     return Column(
       children: [
         dividerBetween(),
-        Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("Completed tasks!"),
-                SizedBox(width: 10,),
-                Icon(Icons.thumb_up_alt)
-              ],
-            ),
+        ExpansionTile(
+          children: [
+            expansionTileCompletedAssets(),
+          ],
+          iconColor: Color.fromARGB(255, 4, 56, 146),
+          title: Text("Completed tasks below!",style: TextStyle(fontWeight: FontWeight.bold),),
+          textColor: Color.fromARGB(255, 4, 56, 146),
+          leading: Icon(Icons.thumb_up_outlined),
+        ),
+        SizedBox(width: 10,),
+        
             dividerBetween(),
       ],
     );
@@ -81,7 +130,10 @@ class _ToDoState extends State<ToDo> {
                   title: Text("${TaskList[index]}"),
                   secondary: IconButton(
                     onPressed: (){
-                      
+                      TaskList.removeAt(index);
+                      setState(() {
+                        
+                      });
                     }, icon: Icon(Icons.delete, color: Colors.red.shade400,)
                   ),
                   value: false,
@@ -102,6 +154,10 @@ class _ToDoState extends State<ToDo> {
                   title: Text("${CompletedList[index]}"),
                   secondary: IconButton(
                     onPressed: (){
+                      CompletedList.removeAt(index);
+                      setState(() {
+                        
+                      });
                       
                     }, icon: Icon(Icons.delete, color: Colors.red.shade400,)
                   ),
