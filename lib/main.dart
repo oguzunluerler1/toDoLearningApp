@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:todo/screens/to_do.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  // WidgetsFlutterBinding.ensureInitialized();
+  // SharedManager.SharedPreferencesInit();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
