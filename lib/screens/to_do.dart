@@ -45,18 +45,20 @@ class _ToDoState extends State<ToDo> {
         title: Text("Errand Generator",style: TextStyle(color: Color.fromARGB(255, 34, 22, 68)),),
       ),
       floatingActionButton: FAButton(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       body: bodyMethod()
     );
   }
 
-  FloatingActionButton FAButton() {
-    return FloatingActionButton(
-      child: Icon(Icons.add),
-      onPressed: () {
-        tf.clear();
-        openDialog();
-      }
+  Widget FAButton() {
+    return Padding(
+      padding: const EdgeInsets.only(right: 50.0),
+      child: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          tf.clear();
+          openDialog();
+        }
+      ),
     );
   }
 
@@ -101,7 +103,25 @@ class _ToDoState extends State<ToDo> {
           Center(child: Text("Stuff to do;", style: TextStyle(fontSize: 30),)),
           dividerBetween(),  
           TaskList.length == 0 
-          ? isFirstTime==true ? Text("Write the tasks here via the add button down below.",textAlign: TextAlign.center,) :Image.network("https://i.ytimg.com/vi/rDleFy3yFB8/hqdefault.jpg") 
+          ? isFirstTime==true ? 
+          Column(
+            children: [
+              Text("Write the tasks here via the add button down below.",
+                textAlign: TextAlign.center,
+              ),
+              Container(
+                width: double.infinity,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Text("For example: Take out emre(trash).",
+                    textAlign: TextAlign.right,
+                    style: TextStyle(fontFamily: "Calibri", fontStyle: FontStyle.italic, fontSize: 11),
+                  ),
+                ),
+              ),
+            ],
+          ) 
+          :Image.network("https://i.ytimg.com/vi/rDleFy3yFB8/hqdefault.jpg") 
           : ListView.builder(
               shrinkWrap: true,
               itemCount: TaskList.length,

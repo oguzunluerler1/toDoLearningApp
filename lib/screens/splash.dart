@@ -29,7 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("In the meantime, nose picking is not allowed."),
+              Text("In the meantime, feel free to think of things to be done."),
               Icon(Icons.not_interested_rounded)
             ],
           ),
