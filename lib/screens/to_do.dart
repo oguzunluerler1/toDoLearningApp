@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -14,6 +15,7 @@ class _ToDoState extends State<ToDo> {
   TextEditingController tf = TextEditingController();
   bool isFirstTime = true;
   late SharedPreferences pref;
+  Random rnd = Random();
   @override
   void initState() {
     super.initState();
@@ -34,6 +36,9 @@ class _ToDoState extends State<ToDo> {
   void SaveTask() async {
     await pref.setStringList("incompleteLy", TaskList);
     await pref.setStringList("completeLy", CompletedList);
+    setState(() {
+      
+    });
   }
 
   @override
@@ -81,11 +86,9 @@ class _ToDoState extends State<ToDo> {
               TaskList.add(tf.text);
               isFirstTime = false;
               SaveTask();
-              setState(() {
-                
-              });
               Navigator.pop(context);
-            }, child: Text("Add task"))
+            }, child: Text("Add task")),
+            
           ],
         ),
       ),
@@ -176,9 +179,6 @@ class _ToDoState extends State<ToDo> {
                     onPressed: (){
                       TaskList.removeAt(index);
                       SaveTask();
-                      setState(() {
-                        
-                      });
                     }, icon: Icon(Icons.delete, color: Colors.red.shade400,)
                   ),
                   value: false,
@@ -186,9 +186,6 @@ class _ToDoState extends State<ToDo> {
                     CompletedList.add(TaskList[index]);
                     TaskList.removeAt(index);
                     SaveTask();
-                    setState(() {
-                      
-                    });
                   }
                 ),
               );
@@ -201,11 +198,7 @@ class _ToDoState extends State<ToDo> {
                   secondary: IconButton(
                     onPressed: (){
                       CompletedList.removeAt(index);
-                      SaveTask();
-                      setState(() {
-                        
-                      });
-                      
+                      SaveTask();     
                     }, icon: Icon(Icons.delete, color: Colors.red.shade400,)
                   ),
                   value: true,
@@ -213,9 +206,6 @@ class _ToDoState extends State<ToDo> {
                     TaskList.add(CompletedList[index]);
                     CompletedList.removeAt(index);
                     SaveTask();
-                    setState(() {
-                      
-                    });
                   }
                 ),
               );
