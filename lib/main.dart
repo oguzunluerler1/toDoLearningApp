@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:todo/screens/to_do.dart';
+import 'package:todo/screens/splash.dart';
 
 void main() {
-  // WidgetsFlutterBinding.ensureInitialized();
-  // SharedManager.SharedPreferencesInit();
   runApp(MyApp());
 }
 
@@ -13,7 +11,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Material App',
-      home: ToDo(),
+      home: SplashScreen(),
       );
   }
 }

@@ -30,22 +30,11 @@ class _ToDoState extends State<ToDo> {
   print(TaskList);
   print(CompletedList);
   }
-  
 
   void SaveTask() async {
     await pref.setStringList("incompleteLy", TaskList);
     await pref.setStringList("completeLy", CompletedList);
   }
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   boolInitializer();
-  // }
-
-  // void boolInitializer () async {
-  //   isFirstTime = (await SharedManager().getBoolVal("isItFirstTime"))!;
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -53,9 +42,10 @@ class _ToDoState extends State<ToDo> {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.amber,
-        title: Text("a"),
+        title: Text("Errand Generator",style: TextStyle(color: Color.fromARGB(255, 34, 22, 68)),),
       ),
       floatingActionButton: FAButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       body: bodyMethod()
     );
   }
@@ -65,7 +55,6 @@ class _ToDoState extends State<ToDo> {
       child: Icon(Icons.add),
       onPressed: () {
         tf.clear();
-        // SharedManager().setBoolVal("isItFirstTime", false);
         openDialog();
       }
     );
@@ -112,7 +101,7 @@ class _ToDoState extends State<ToDo> {
           Center(child: Text("Stuff to do;", style: TextStyle(fontSize: 30),)),
           dividerBetween(),  
           TaskList.length == 0 
-          ? isFirstTime==true ? Text("Write the tasks here via the add button down below.",) :Image.network("https://i.ytimg.com/vi/rDleFy3yFB8/hqdefault.jpg") 
+          ? isFirstTime==true ? Text("Write the tasks here via the add button down below.",textAlign: TextAlign.center,) :Image.network("https://i.ytimg.com/vi/rDleFy3yFB8/hqdefault.jpg") 
           : ListView.builder(
               shrinkWrap: true,
               itemCount: TaskList.length,
@@ -211,17 +200,6 @@ class _ToDoState extends State<ToDo> {
                 ),
               );
   }
-
-  // Future<void> SaveTask() async {
-  //   await SharedManager().setStringListVal("completeLy", CompletedList);
-  //   await SharedManager().setStringListVal("incompleteLy", TaskList);
-  // }  
-  //
-  //
-  // void getTask() async {
-  //    CompletedList = await SharedManager().getStringListVal("completeLy")!;
-  //    TaskList = await SharedManager().getStringListVal("incompleteLy")!;
-  // } 
 
   Divider dividerBetween() {
     return Divider(
